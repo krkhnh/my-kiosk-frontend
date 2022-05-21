@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <MenuCategoryList :menuCategories="menuCategories"/>
+    <MenuCategoryList
+        :menuCategories="menuCategories"
+        :selectedMenuCategory="selectedMenuCategory"
+    />
     <br>
-    <MenuList :menus="menus"/>
+    <MenuList :menus="selectedMenuCategoryMenus"/>
   </div>
 </template>
 
@@ -25,11 +28,21 @@ export default {
       const [menuCategories, menus] = responses
       this.menus = menus.data
       this.menuCategories = menuCategories.data
+      this.selectedMenuCategory = this.menuCategories[0]
     })
 
   },
   data() {
-    return {menus: [], menuCategories: []}
+    return {
+      menus: [],
+      menuCategories: [],
+      selectedMenuCategory: null
+    }
+  },
+  computed: {
+    selectedMenuCategoryMenus() {
+      return this.menus.filter(menu => menu.menuCategoryId === this.selectedMenuCategory.id)
+    }
   }
 }
 </script>
