@@ -6,7 +6,14 @@
         :selectMenuCategory="selectMenuCategory"
     />
     <br>
-    <MenuButtonList :menus="selectedMenuCategoryMenus"/>
+    <MenuButtonList
+        :menus="selectedMenuCategoryMenus"
+        :selectMenu="selectMenu"/>
+
+    <MenuModal
+        v-if="selectedMenu"
+        :menu="selectedMenu"
+        :selectMenu="selectMenu"/>
   </div>
 </template>
 
@@ -14,10 +21,12 @@
 import axios from 'axios'
 import MenuButtonList from './components/MenuButtonList.vue'
 import MenuCategoryButtonList from '@/components/MenuCategoryButtonList'
+import MenuModal from '@/components/MenuModal'
 
 export default {
   name: 'App',
   components: {
+    MenuModal,
     MenuCategoryButtonList,
     MenuButtonList
   },
@@ -37,7 +46,8 @@ export default {
     return {
       menus: [],
       menuCategories: [],
-      selectedMenuCategory: null
+      selectedMenuCategory: null,
+      selectedMenu: null
     }
   },
   computed: {
@@ -45,9 +55,19 @@ export default {
       return this.menus.filter(menu => menu.menuCategoryId === this.selectedMenuCategory.id)
     }
   },
+  watch: {
+    selectedMenu(selectedMenu) {
+      if (selectedMenu !== null) {
+        this.$bvModal.show('menuModal')
+      }
+    },
+  },
   methods: {
     selectMenuCategory(menuCategory) {
       this.selectedMenuCategory = menuCategory
+    },
+    selectMenu(menu) {
+      this.selectedMenu = menu
     }
   }
 }

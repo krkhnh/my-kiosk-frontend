@@ -4,6 +4,8 @@
       :class="{'bg-light':mouseHover}"
       @mouseover="mouseHover=true"
       @mouseout="mouseHover=false"
+      v-b-modal:menuModal
+      @click="selectMenu(menu)"
   >
     {{ menu.name + ' ' + menu.price + '원' }}
   </div>
@@ -12,7 +14,8 @@
 export default {
   name: 'MenuButton',
   props: {
-    menu: Object
+    menu: Object,
+    selectMenu: Function
   },
   data() {
     return {
