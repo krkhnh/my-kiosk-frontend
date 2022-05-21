@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <MenuCategoryList
+    <MenuCategoryButtonList
         :menuCategories="menuCategories"
         :selectedMenuCategory="selectedMenuCategory"
         :selectMenuCategory="selectMenuCategory"
@@ -13,12 +13,12 @@
 <script>
 import axios from 'axios'
 import MenuButtonList from './components/MenuButtonList.vue'
-import MenuCategoryList from '@/components/MenuCategoryList'
+import MenuCategoryButtonList from '@/components/MenuCategoryButtonList'
 
 export default {
   name: 'App',
   components: {
-    MenuCategoryList,
+    MenuCategoryButtonList,
     MenuButtonList
   },
   created() {
