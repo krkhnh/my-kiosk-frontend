@@ -26,6 +26,7 @@ export default {
   name: 'OrderModal',
   props: {
     cartItems: Array,
+    onOrdered: Function
   },
   computed: {
     finalPrice() {
@@ -53,7 +54,9 @@ export default {
   methods: {
     postOrders() {
       axios.post('http://localhost:8080/orders', this.postOrdersResponseBody
-      )
+      ).then(() => {
+        this.onOrdered()
+      })
     }
   }
 }

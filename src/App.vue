@@ -36,6 +36,7 @@
       <OrderModal
           v-if="cartItems.length"
           :cart-items="cartItems"
+          :onOrdered="resetComponent"
       />
     </template>
   </div>
@@ -49,6 +50,17 @@ import MenuModal from '@/components/MenuModal'
 import CartItemButtonList from '@/components/CartItemButtonList'
 import OrderModal from '@/components/OrderModal'
 
+function initialData() {
+  return {
+    menus: [],
+    menuCategories: [],
+    cartItems: [],
+    selectedMenuCategory: null,
+    selectedMenu: null,
+    selectedCartItem: null
+  }
+}
+
 export default {
   name: 'App',
   components: {
@@ -59,30 +71,10 @@ export default {
     MenuButtonList
   },
   created() {
-    Promise.all([
-      axios.get('http://localhost:8080/menuCategories'),
-      axios.get('http://localhost:8080/menus')
-    ]).then(responses => {
-      const [menuCategories, menus] = responses
-      this.menus = menus.data
-      this.menuCategories = menuCategories.data
-      this.selectedMenuCategory = this.menuCategories[0]
-    }).catch(reason => {
-      alert('초기화에 필요한 정보 요청에 실패했습니다. 백엔드 서버가 구동 중 인지 확인해주세요.')
-      console.error('요청 실패: ')
-      console.error(reason)
-    })
-
+    this.getRequiredData()
   },
   data() {
-    return {
-      menus: [],
-      menuCategories: [],
-      cartItems: [],
-      selectedMenuCategory: null,
-      selectedMenu: null,
-      selectedCartItem: null
-    }
+    return initialData()
   },
   computed: {
     selectedMenuCategoryMenus() {
@@ -106,6 +98,25 @@ export default {
     },
   },
   methods: {
+    resetComponent() {
+      Object.assign(this.$data, initialData())
+      this.getRequiredData()
+    },
+    getRequiredData() {
+      Promise.all([
+        axios.get('http://localhost:8080/menuCategories'),
+        axios.get('http://localhost:8080/menus')
+      ]).then(responses => {
+        const [menuCategories, menus] = responses
+        this.menus = menus.data
+        this.menuCategories = menuCategories.data
+        this.selectedMenuCategory = this.menuCategories[0]
+      }).catch(reason => {
+        alert('초기화에 필요한 정보 요청에 실패했습니다. 백엔드 서버가 구동 중 인지 확인해주세요.')
+        console.error('요청 실패: ')
+        console.error(reason)
+      })
+    },
     setSelectedMenuCategory(menuCategory) {
       this.selectedMenuCategory = menuCategory
     },
