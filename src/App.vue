@@ -23,8 +23,9 @@
       </b-button>
       <b-button
           class="bg-success"
-          :disabled="cartItems.length === 0">
-        Order(TODO)
+          :disabled="cartItems.length === 0"
+          v-b-modal:orderModal>
+        Order
       </b-button>
 
       <MenuModal
@@ -32,6 +33,10 @@
           :menu="selectedMenu"
           :onHide="setSelectedMenu"
           :on-ok="addCartItem"/>
+      <OrderModal
+          v-if="cartItems.length"
+          :cart-items="cartItems"
+      />
     </template>
   </div>
 </template>
@@ -42,10 +47,12 @@ import MenuButtonList from './components/MenuButtonList.vue'
 import MenuCategoryButtonList from '@/components/MenuCategoryButtonList'
 import MenuModal from '@/components/MenuModal'
 import CartItemButtonList from '@/components/CartItemButtonList'
+import OrderModal from '@/components/OrderModal'
 
 export default {
   name: 'App',
   components: {
+    OrderModal,
     CartItemButtonList,
     MenuModal,
     MenuCategoryButtonList,
@@ -108,11 +115,11 @@ export default {
     setSelectedCartMenu(menu) {
       this.selectedCartItem = menu
     },
-    addCartItem(menu, qty) {
+    addCartItem(menu, quantity) {
       this.cartItems.push({
         id: this.lastCartItemId + 1,
         menu: menu,
-        qty: qty
+        quantity: quantity
       })
     }
   }

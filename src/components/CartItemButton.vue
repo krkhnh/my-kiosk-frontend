@@ -7,7 +7,7 @@
       v-b-modal:menuModal
       @click="onClick(cartItem)"
   >
-    {{ cartItem.menu.name + ' x' + cartItem.qty }}
+    {{ cartItem.menu.name + ' x' + cartItem.quantity }}
   </div>
 </template>
 <script>
