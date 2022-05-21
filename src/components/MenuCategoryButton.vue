@@ -5,7 +5,7 @@
           'bg-warning':selected,
           'bg-light':!selected && mouseHover
         }"
-      v-on:click="setSelectedMenuCategory(menuCategory)"
+      @click="onClick(menuCategory)"
       @mouseover="mouseHover=true"
       @mouseout="mouseHover=false"
   >
@@ -18,7 +18,7 @@ export default {
   props: {
     menuCategory: Object,
     selected: Boolean,
-    setSelectedMenuCategory: Function
+    onClick: Function
   },
   data() {
     return {

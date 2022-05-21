@@ -1,7 +1,7 @@
 <template>
   <b-modal id="menuModal"
            :title="menu.name"
-           @hide="setSelectedMenu(null)"
+           @hide="onHide(null)"
   >
     {{ menu.name + ' ' + menu.price + '원' }}
   </b-modal>
@@ -11,7 +11,7 @@ export default {
   name: 'MenuModal',
   props: {
     menu: Object,
-    setSelectedMenu: Function
+    onHide: Function
   }
 }
 </script>

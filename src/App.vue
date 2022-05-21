@@ -3,17 +3,17 @@
     <MenuCategoryButtonList
         :menuCategories="menuCategories"
         :selectedMenuCategory="selectedMenuCategory"
-        :setSelectedMenuCategory="setSelectedMenuCategory"
+        :onButtonClick="setSelectedMenuCategory"
     />
     <br>
     <MenuButtonList
         :menus="selectedMenuCategoryMenus"
-        :setSelectedMenu="setSelectedMenu"/>
+        :onButtonClick="setSelectedMenu"/>
 
     <MenuModal
         v-if="selectedMenu"
         :menu="selectedMenu"
-        :setSelectedMenu="setSelectedMenu"/>
+        :onHide="setSelectedMenu"/>
   </div>
 </template>
 
