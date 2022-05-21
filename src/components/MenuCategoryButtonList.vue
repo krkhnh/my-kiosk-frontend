@@ -5,7 +5,7 @@
           v-for="menuCategory in menuCategories"
           v-bind:key="menuCategory.id"
           :menuCategory="menuCategory"
-          :select-menu-category="selectMenuCategory"
+          :setSelectedMenuCategory="setSelectedMenuCategory"
           :selected="menuCategory===selectedMenuCategory"
       />
     </div>
@@ -20,7 +20,7 @@ export default {
   props: {
     menuCategories: Array,
     selectedMenuCategory: Object,
-    selectMenuCategory: Function
+    setSelectedMenuCategory: Function
   }
 }
 </script>

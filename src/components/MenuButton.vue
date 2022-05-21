@@ -5,7 +5,7 @@
       @mouseover="mouseHover=true"
       @mouseout="mouseHover=false"
       v-b-modal:menuModal
-      @click="selectMenu(menu)"
+      @click="setSelectedMenu(menu)"
   >
     {{ menu.name + ' ' + menu.price + '원' }}
   </div>
@@ -15,7 +15,7 @@ export default {
   name: 'MenuButton',
   props: {
     menu: Object,
-    selectMenu: Function
+    setSelectedMenu: Function
   },
   data() {
     return {

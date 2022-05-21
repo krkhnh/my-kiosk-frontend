@@ -4,7 +4,7 @@
       <MenuButton v-for="menu in menus"
                   v-bind:key="menu.id"
                   :menu="menu"
-                  :selectMenu="selectMenu"
+                  :setSelectedMenu="setSelectedMenu"
       />
     </div>
   </div>
@@ -18,7 +18,7 @@ export default {
   components: {MenuButton},
   props: {
     menus: Array,
-    selectMenu: Function
+    setSelectedMenu: Function
   }
 }
 </script>

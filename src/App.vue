@@ -3,17 +3,17 @@
     <MenuCategoryButtonList
         :menuCategories="menuCategories"
         :selectedMenuCategory="selectedMenuCategory"
-        :selectMenuCategory="selectMenuCategory"
+        :setSelectedMenuCategory="setSelectedMenuCategory"
     />
     <br>
     <MenuButtonList
         :menus="selectedMenuCategoryMenus"
-        :selectMenu="selectMenu"/>
+        :setSelectedMenu="setSelectedMenu"/>
 
     <MenuModal
         v-if="selectedMenu"
         :menu="selectedMenu"
-        :selectMenu="selectMenu"/>
+        :setSelectedMenu="setSelectedMenu"/>
   </div>
 </template>
 
@@ -63,10 +63,10 @@ export default {
     },
   },
   methods: {
-    selectMenuCategory(menuCategory) {
+    setSelectedMenuCategory(menuCategory) {
       this.selectedMenuCategory = menuCategory
     },
-    selectMenu(menu) {
+    setSelectedMenu(menu) {
       this.selectedMenu = menu
     }
   }
