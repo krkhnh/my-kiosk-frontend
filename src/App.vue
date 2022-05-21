@@ -1,16 +1,35 @@
 <template>
   <div id="app">
-    <MenuList/>
+    <MenuCategoryList :menuCategories="menuCategories"/>
+    <br>
+    <MenuList :menus="menus"/>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import MenuList from './components/MenuList.vue'
+import MenuCategoryList from '@/MenuCategoryList'
 
 export default {
   name: 'App',
   components: {
-    MenuList: MenuList
+    MenuCategoryList,
+    MenuList
+  },
+  created() {
+    Promise.all([
+      axios.get('http://localhost:8080/menuCategories'),
+      axios.get('http://localhost:8080/menus')
+    ]).then(responses => {
+      const [menuCategories, menus] = responses
+      this.menus = menus.data
+      this.menuCategories = menuCategories.data
+    })
+
+  },
+  data() {
+    return {menus: [], menuCategories: []}
   }
 }
 </script>
