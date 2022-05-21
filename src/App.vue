@@ -78,7 +78,7 @@ export default {
   },
   computed: {
     selectedMenuCategoryMenus() {
-      return this.menus.filter(menu => menu.menuCategoryId === this.selectedMenuCategory.id)
+      return this.menus.filter(menu => menu.menuCategoryIds.includes(this.selectedMenuCategory.id))
     },
     lastCartItemId() {
       if (this.cartItems.length === 0) {
