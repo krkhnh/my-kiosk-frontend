@@ -1,30 +1,38 @@
 <template>
   <div id="app">
-    <MenuCategoryButtonList
-        :menuCategories="menuCategories"
-        :selectedMenuCategory="selectedMenuCategory"
-        :onButtonClick="setSelectedMenuCategory"/>
-    <br>
-    <MenuButtonList
-        :menus="selectedMenuCategoryMenus"
-        :onButtonClick="setSelectedMenu"/>
-    <br>
-    <CartItemButtonList
-        :cartItems="cartItems"
-        :onButtonClick="setSelectedCartMenu"/>
-    <br>
-    <b-button
-        class="bg-secondary mr-3"
-        @click="cartItems.splice(0)">
-      Clear
-    </b-button>
-    <b-button class="bg-success">Order(TODO)</b-button>
+    <b-spinner v-if="!initialized"/>
 
-    <MenuModal
-        v-if="selectedMenu"
-        :menu="selectedMenu"
-        :onHide="setSelectedMenu"
-        :on-ok="addCartItem"/>
+    <template v-if="initialized">
+      <MenuCategoryButtonList
+          :menuCategories="menuCategories"
+          :selectedMenuCategory="selectedMenuCategory"
+          :onButtonClick="setSelectedMenuCategory"/>
+      <br>
+      <MenuButtonList
+          :menus="selectedMenuCategoryMenus"
+          :onButtonClick="setSelectedMenu"/>
+      <br>
+      <CartItemButtonList
+          :cartItems="cartItems"
+          :onButtonClick="setSelectedCartMenu"/>
+      <br>
+      <b-button
+          class="bg-secondary mr-3"
+          @click="cartItems.splice(0)">
+        Clear
+      </b-button>
+      <b-button
+          class="bg-success"
+          :disabled="cartItems.length === 0">
+        Order(TODO)
+      </b-button>
+
+      <MenuModal
+          v-if="selectedMenu"
+          :menu="selectedMenu"
+          :onHide="setSelectedMenu"
+          :on-ok="addCartItem"/>
+    </template>
   </div>
 </template>
 
@@ -52,6 +60,10 @@ export default {
       this.menus = menus.data
       this.menuCategories = menuCategories.data
       this.selectedMenuCategory = this.menuCategories[0]
+    }).catch(reason => {
+      alert('초기화에 필요한 정보 요청에 실패했습니다. 백엔드 서버가 구동 중 인지 확인해주세요.')
+      console.error('요청 실패: ')
+      console.error(reason)
     })
 
   },
@@ -74,6 +86,9 @@ export default {
         return -1
       }
       return Math.max(...this.cartItems.map(cartItem => cartItem.id))
+    },
+    initialized() {
+      return this.menus.length > 0 && this.menuCategories.length > 0
     }
   },
   watch: {
