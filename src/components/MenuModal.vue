@@ -2,6 +2,7 @@
   <b-modal id="menuModal"
            :title="menu.name"
            @hide="onHide(null)"
+           @ok="onOk(menu,1)"
   >
     {{ menu.name + ' ' + menu.price + '원' }}
   </b-modal>
@@ -11,7 +12,8 @@ export default {
   name: 'MenuModal',
   props: {
     menu: Object,
-    onHide: Function
+    onHide: Function,
+    onOk: Function
   }
 }
 </script>

@@ -3,17 +3,28 @@
     <MenuCategoryButtonList
         :menuCategories="menuCategories"
         :selectedMenuCategory="selectedMenuCategory"
-        :onButtonClick="setSelectedMenuCategory"
-    />
+        :onButtonClick="setSelectedMenuCategory"/>
     <br>
     <MenuButtonList
         :menus="selectedMenuCategoryMenus"
         :onButtonClick="setSelectedMenu"/>
+    <br>
+    <CartItemButtonList
+        :cartItems="cartItems"
+        :onButtonClick="setSelectedCartMenu"/>
+    <br>
+    <b-button
+        class="bg-secondary mr-3"
+        @click="cartItems.splice(0)">
+      Clear
+    </b-button>
+    <b-button class="bg-success">Order(TODO)</b-button>
 
     <MenuModal
         v-if="selectedMenu"
         :menu="selectedMenu"
-        :onHide="setSelectedMenu"/>
+        :onHide="setSelectedMenu"
+        :on-ok="addCartItem"/>
   </div>
 </template>
 
@@ -22,10 +33,12 @@ import axios from 'axios'
 import MenuButtonList from './components/MenuButtonList.vue'
 import MenuCategoryButtonList from '@/components/MenuCategoryButtonList'
 import MenuModal from '@/components/MenuModal'
+import CartItemButtonList from '@/components/CartItemButtonList'
 
 export default {
   name: 'App',
   components: {
+    CartItemButtonList,
     MenuModal,
     MenuCategoryButtonList,
     MenuButtonList
@@ -46,13 +59,21 @@ export default {
     return {
       menus: [],
       menuCategories: [],
+      cartItems: [],
       selectedMenuCategory: null,
-      selectedMenu: null
+      selectedMenu: null,
+      selectedCartItem: null
     }
   },
   computed: {
     selectedMenuCategoryMenus() {
       return this.menus.filter(menu => menu.menuCategoryId === this.selectedMenuCategory.id)
+    },
+    lastCartItemId() {
+      if (this.cartItems.length === 0) {
+        return -1
+      }
+      return Math.max(...this.cartItems.map(cartItem => cartItem.id))
     }
   },
   watch: {
@@ -68,6 +89,16 @@ export default {
     },
     setSelectedMenu(menu) {
       this.selectedMenu = menu
+    },
+    setSelectedCartMenu(menu) {
+      this.selectedCartItem = menu
+    },
+    addCartItem(menu, qty) {
+      this.cartItems.push({
+        id: this.lastCartItemId + 1,
+        menu: menu,
+        qty: qty
+      })
     }
   }
 }

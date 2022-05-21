@@ -3,7 +3,7 @@
     <div class="row row-cols-3">
       <MenuCategoryButton
           v-for="menuCategory in menuCategories"
-          v-bind:key="menuCategory.id"
+          :key="menuCategory.id"
           :menuCategory="menuCategory"
           :onClick="onButtonClick"
           :selected="menuCategory===selectedMenuCategory"

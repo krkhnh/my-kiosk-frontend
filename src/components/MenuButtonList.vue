@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row row-cols-3">
       <MenuButton v-for="menu in menus"
-                  v-bind:key="menu.id"
+                  :key="menu.id"
                   :menu="menu"
                   :onClick="onButtonClick"
       />
