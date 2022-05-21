@@ -6,20 +6,20 @@
         :selectMenuCategory="selectMenuCategory"
     />
     <br>
-    <MenuList :menus="selectedMenuCategoryMenus"/>
+    <MenuButtonList :menus="selectedMenuCategoryMenus"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import MenuList from './components/MenuList.vue'
-import MenuCategoryList from '@/MenuCategoryList'
+import MenuButtonList from './components/MenuButtonList.vue'
+import MenuCategoryList from '@/components/MenuCategoryList'
 
 export default {
   name: 'App',
   components: {
     MenuCategoryList,
-    MenuList
+    MenuButtonList
   },
   created() {
     Promise.all([
