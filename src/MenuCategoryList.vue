@@ -5,6 +5,7 @@
            v-bind:key="menuCategory.id"
            class="col border"
            :class="{'bg-warning':menuCategory===selectedMenuCategory}"
+           v-on:click="selectMenuCategory(menuCategory)"
       >
         {{ menuCategory.name }}
       </div>
@@ -16,7 +17,8 @@ export default {
   name: 'MenuCategoryList',
   props: {
     menuCategories: Array,
-    selectedMenuCategory: Object
+    selectedMenuCategory: Object,
+    selectMenuCategory: Function
   }
 }
 </script>

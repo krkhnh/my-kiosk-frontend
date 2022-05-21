@@ -3,6 +3,7 @@
     <MenuCategoryList
         :menuCategories="menuCategories"
         :selectedMenuCategory="selectedMenuCategory"
+        :selectMenuCategory="selectMenuCategory"
     />
     <br>
     <MenuList :menus="selectedMenuCategoryMenus"/>
@@ -42,6 +43,11 @@ export default {
   computed: {
     selectedMenuCategoryMenus() {
       return this.menus.filter(menu => menu.menuCategoryId === this.selectedMenuCategory.id)
+    }
+  },
+  methods: {
+    selectMenuCategory(menuCategory) {
+      this.selectedMenuCategory = menuCategory
     }
   }
 }
