@@ -1,19 +1,19 @@
 <template>
   <b-modal id="menuModal"
-           :title="menu.name"
+           :title="menu ? menu.name : ''"
            @hide="onHide(null)"
-           @ok="onOk(menu, quantity)"
+           @ok="menu ? onOk(menu, quantity) : null"
   >
-    {{ menu.name }}
-    <br>
-    {{ '단가: ' + menu.price + '원' }}
-    <br>
-    <br>
-    <label for="menuQuantity">수량</label>
-    <b-form-spinbutton id="menuQuantity" min="1" max="10" v-model="quantity"/>
-    <br>
-    <br>
-    {{ '합계금액: ' + menu.price * quantity + ' 원' }}
+    <div v-if="menu">
+      {{ '단가: ' + menu.price + '원' }}
+      <br>
+      <br>
+      <label for="menuQuantity">수량</label>
+      <b-form-spinbutton id="menuQuantity" min="1" max="10" v-model="quantity"/>
+      <br>
+      <br>
+      {{ '합계금액: ' + menu.price * quantity + ' 원' }}
+    </div>
   </b-modal>
 </template>
 <script>
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       quantity: 1
-    }
+    };
   }
-}
+};
 </script>
